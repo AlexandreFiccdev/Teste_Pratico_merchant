@@ -18,12 +18,18 @@ pela API, via a variável de ambiente `API_BASE_URL` (dentro do Docker aponta pa
 ## Organização dos arquivos
 
 ```
-config/            settings/urls do projeto Django da API
-Merchants/          app da API: models, views (ViewSet), serializers, exceptions, validators
-  tests/             testes automatizados, um arquivo por responsabilidade
-frontend/
-  config/            settings/urls do projeto Django do front
-  merchants_ui/       app do front: views, forms, services.py (client HTTP), templates, static
+teste_pratico/
+├── config/            # settings/urls da API
+├── Merchants/         # app Django da API (models, views, serializers, exceptions, validators)
+│   └── tests/         # testes automatizados, um arquivo por responsabilidade
+├── Dockerfile          # imagem da API
+├── docker-compose.yml  # orquestra api + frontend
+├── requirements.txt    # deps da API
+└── frontend/
+    ├── config/            # settings/urls do front-end
+    ├── merchants_ui       # app Django do front-end (views, forms, services.py, templates) 
+    ├── Dockerfile         # imagem do front-end
+    └── requirements.txt   # deps do front-end (Django + requests)
 ```
 
 Dentro de `Merchants/`, a separação segue o padrão DRF: `models.py` (dados + `MerchantStatus`

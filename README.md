@@ -3,12 +3,38 @@
 Sistema de cadastro e análise de Merchants (estabelecimentos comerciais), com API em Django REST
 Framework e um front-end em Django (templates server-side) que consome essa API.
 
-## Como rodar (Docker)
+## Obtendo o projeto
+
+Escolha uma das opções abaixo para ter o código na sua máquina. Os passos seguintes deste README
+assumem que você está com o terminal aberto dentro da pasta `teste_pratico/`.
+
+**Opção 1 — clonando via Git:**
+
+```bash
+git clone https://github.com/AlexandreFiccdev/Teste_Pratico_merchant.git teste_pratico
+cd teste_pratico
+```
+
+**Opção 2 — a partir de um arquivo `.zip`:**
+
+1. Extraia o `.zip` recebido em uma pasta de sua preferência.
+2. Abra o terminal dentro da pasta extraída (`teste_pratico/`, a que contém este `README.md`).
+
+```bash
+# Windows (PowerShell)
+Expand-Archive teste_pratico.zip -DestinationPath .
+cd teste_pratico
+
+# Linux/Mac
+unzip teste_pratico.zip
+cd teste_pratico
+```
+
+## Como rodar o programa (Recomendado)
 
 Pré-requisito: Docker e Docker Compose instalados.
 
 ```bash
-cd teste_pratico
 docker compose up -d --build
 ```
 
@@ -66,7 +92,6 @@ distintos).
 
 **API:**
 ```bash
-cd teste_pratico
 python -m venv venv
 ./venv/Scripts/activate       # Windows
 pip install -r requirements.txt
@@ -90,7 +115,6 @@ funciona direto se a API estiver rodando localmente na porta 8000.
 ## Rodando os testes automatizados da API
 
 ```bash
-cd teste_pratico
 python manage.py test Merchants
 ```
 
