@@ -1,5 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import extend_schema, extend_schema_view
+from drf_spectacular.utils import (
+    OpenApiParameter,
+    extend_schema,
+    extend_schema_view,
+)
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -15,7 +19,30 @@ from .serializers import (
 
 
 @extend_schema_view(
-    list=extend_schema(responses=MerchantListSerializer(many=True)),
+    list=extend_schema(
+        responses=MerchantListSerializer(many=True),
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=int,
+                location=OpenApiParameter.QUERY,
+                required=False,
+                description=(
+                    "Filtro opcional para restringir a listagem a um ID exato "
+                    "(usado pela busca por ID da tela de listagem). Para buscar "
+                    "um único merchant diretamente, use GET /merchants/{id}/."
+                ),
+            ),
+            OpenApiParameter(
+                name="status",
+                type=str,
+                location=OpenApiParameter.QUERY,
+                required=False,
+                enum=[choice.value for choice in MerchantStatus],
+                description="Filtro opcional para restringir a listagem por status.",
+            ),
+        ],
+    ),
     retrieve=extend_schema(responses=MerchantDetailSerializer),
     create=extend_schema(responses=MerchantDetailSerializer),
     update=extend_schema(responses=MerchantDetailSerializer),
