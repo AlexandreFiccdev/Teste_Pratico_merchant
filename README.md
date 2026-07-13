@@ -3,6 +3,9 @@
 Sistema de cadastro e análise de Merchants (estabelecimentos comerciais), com API em Django REST
 Framework e um front-end em Django (templates server-side) que consome essa API.
 
+Para entender melhor como a regra de negócio, a arquitetura, os testes e outras decisões do
+projeto foram pensados, veja [DECISOES_TECNICAS.md](DECISOES_TECNICAS.md).
+
 ## Obtendo o projeto
 
 Escolha uma das opções abaixo para ter o código na sua máquina. Os passos seguintes deste README
