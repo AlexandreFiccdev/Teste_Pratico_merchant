@@ -1,0 +1,55 @@
+{% extends "merchants_ui/base.html" %}
+{% load merchant_extras %}
+{% block title %}Merchants{% endblock %}
+{% block content %}
+
+<form method="get" class="filter-form">
+  <label for="status">Filtrar por status:</label>
+  <select name="status" id="status" class="status-select" onchange="this.form.submit()">
+    {% for value, label in status_choices %}
+    <option value="{{ value }}" {% if value == selected_status %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <label for="id">Buscar por ID:</label>
+  <input type="number" name="id" id="id" class="id-search-input" min="1" value="{{ merchant_id }}" placeholder="Ex: 42">
+  <button type="submit" class="button">Buscar</button>
+  {% if selected_status or merchant_id %}
+  <a href="{% url 'merchant_list' %}" class="button">Limpar</a>
+  {% endif %}
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Razão social</th>
+      <th>CNPJ</th>
+      <th>Status</th>
+      <th>Criado em</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for merchant in merchants %}
+    <tr>
+      <td>{{ merchant.id }}</td>
+      <td>{{ merchant.razao_social }}</td>
+      <td>{{ merchant.cnpj }}</td>
+      <td><span class="badge badge-{{ merchant.status }}">{{ merchant.status }}</span></td>
+      <td>{{ merchant.created_at|br_datetime }}</td>
+      <td>
+        <a href="{% url 'merchant_detail' merchant.id %}" class="icon-button" title="Visualizar" aria-label="Visualizar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">Nenhum merchant encontrado.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

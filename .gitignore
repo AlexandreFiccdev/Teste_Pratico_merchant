@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+
+venv/
+
+db.sqlite3
+
+.vscode/
+.idea/
+
+.env
+.env.*
+DECISOES_TECNICAS.MD
+DECISOES_TECNICAS.docx
+.DS_Store
+Thumbs.db

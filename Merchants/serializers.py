@@ -1,0 +1,97 @@
+from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+
+from .models import Merchant, MerchantEvent
+from .validators.CNPJ_validator import validate_cnpj
+
+
+class MerchantEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MerchantEvent
+        fields = ["id", "description", "created_at"]
+        read_only_fields = fields
+
+
+class MerchantFieldsMixin(serializers.Serializer):
+    cnpj = serializers.CharField(
+        validators=[
+            validate_cnpj,
+            UniqueValidator(
+                queryset=Merchant.objects.all(),
+                message="Já existe um merchant com esse CNPJ.",
+            ),
+        ],
+        error_messages={
+            "required": "CNPJ é obrigatório.",
+            "blank": "CNPJ é obrigatório.",
+        },
+    )
+    razao_social = serializers.CharField(
+        error_messages={
+            "required": "Razão social é obrigatória.",
+            "blank": "Razão social é obrigatória.",
+        },
+    )
+    email = serializers.EmailField(
+        error_messages={
+            "required": "E-mail é obrigatório.",
+            "blank": "E-mail é obrigatório.",
+        },
+    )
+
+
+class MerchantListSerializer(MerchantFieldsMixin, serializers.ModelSerializer):
+    class Meta:
+        model = Merchant
+        fields = [
+            "id",
+            "cnpj",
+            "razao_social",
+            "nome_fantasia",
+            "email",
+            "telefone",
+            "created_at",
+            "status",
+        ]
+        read_only_fields = ["id", "created_at", "status"]
+
+
+class MerchantDetailSerializer(MerchantFieldsMixin, serializers.ModelSerializer):
+    events = MerchantEventSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Merchant
+        fields = [
+            "id",
+            "cnpj",
+            "razao_social",
+            "nome_fantasia",
+            "email",
+            "telefone",
+            "created_at",
+            "status",
+            "events",
+        ]
+        read_only_fields = ["id", "created_at", "status"]
+
+
+class RejectMerchantSerializer(serializers.Serializer):
+    reason = serializers.CharField(
+        allow_blank=False,
+        trim_whitespace=True,
+        error_messages={
+            "required": "Informe um motivo para rejeitar.",
+            "blank": "Informe um motivo para rejeitar.",
+        },
+    )
+
+
+class BlockMerchantSerializer(serializers.Serializer):
+    reason = serializers.CharField(
+        allow_blank=False,
+        trim_whitespace=True,
+        error_messages={
+            "required": "Informe um motivo para bloquear.",
+            "blank": "Informe um motivo para bloquear.",
+        },
+    )

@@ -1,0 +1,64 @@
+{% extends "merchants_ui/base.html" %}
+{% load merchant_extras %}
+{% block title %}{{ merchant.razao_social }}{% endblock %}
+{% block content %}
+
+<a href="{% url 'merchant_list' %}" class="back-link">&larr; Voltar</a>
+
+<h2>{{ merchant.razao_social }} <span class="badge badge-{{ merchant.status }}">{{ merchant.status }}</span></h2>
+
+<table>
+  <tr><th>CNPJ</th><td>{{ merchant.cnpj }}</td></tr>
+  <tr><th>Nome fantasia</th><td>{{ merchant.nome_fantasia|default:"-" }}</td></tr>
+  <tr><th>E-mail</th><td>{{ merchant.email }}</td></tr>
+  <tr><th>Telefone</th><td>{{ merchant.telefone|default:"-" }}</td></tr>
+  <tr><th>Criado em</th><td>{{ merchant.created_at|br_datetime }}</td></tr>
+</table>
+
+<div class="actions">
+  {% if merchant.status == "draft" %}
+    <a class="button" href="{% url 'merchant_edit' merchant.id %}">Editar dados cadastrais</a>
+    <form class="inline" method="post" action="{% url 'merchant_submit_for_analysis' merchant.id %}">
+      {% csrf_token %}
+      <button type="submit" class="primary">Enviar para análise</button>
+    </form>
+  {% endif %}
+
+  {% if merchant.status == "pending_analysis" %}
+    <form class="inline" method="post" action="{% url 'merchant_approve' merchant.id %}">
+      {% csrf_token %}
+      <button type="submit" class="primary">Aprovar</button>
+    </form>
+
+    <form class="reason-form" method="post" action="{% url 'merchant_reject' merchant.id %}">
+      {% csrf_token %}
+      <div class="field reason-field">
+        <label for="reject-reason">Motivo da rejeição</label>
+        <textarea id="reject-reason" name="reason" rows="1" required></textarea>
+      </div>
+      <button type="submit" class="danger">Rejeitar</button>
+    </form>
+  {% endif %}
+
+  {% if merchant.status == "approved" %}
+    <form class="reason-form" method="post" action="{% url 'merchant_block' merchant.id %}">
+      {% csrf_token %}
+      <div class="field reason-field">
+        <label for="block-reason">Motivo do bloqueio</label>
+        <textarea id="block-reason" name="reason" rows="1" required></textarea>
+      </div>
+      <button type="submit" class="danger">Bloquear</button>
+    </form>
+  {% endif %}
+</div>
+
+<h3>Linha do tempo</h3>
+<ul class="timeline">
+  {% for event in merchant.events %}
+  <li class="{{ event.description|event_dot_class }}">{{ event.description }} <span class="timestamp">— {{ event.created_at|br_datetime }}</span></li>
+  {% empty %}
+  <li>Nenhum evento registrado ainda.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

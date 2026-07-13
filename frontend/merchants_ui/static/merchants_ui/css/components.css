@@ -1,0 +1,129 @@
+.badge { padding: 2px 8px; border-radius: 10px; font-size: 0.8em; font-weight: 600; }
+.badge-draft { background: #8884; }
+.badge-pending_analysis { background: #f5a623; color: #000; }
+.badge-approved { background: #2ecc71; color: #000; }
+.badge-rejected { background: #e74c3c; color: #fff; }
+.badge-blocked { background: #8e44ad; color: #fff; }
+
+.messages { list-style: none; padding: 0; margin: 0 0 16px; }
+.messages li { padding: 10px 14px; border-radius: 6px; margin-bottom: 8px; transition: opacity 0.4s ease, transform 0.4s ease; }
+.messages li.error { background: #e74c3c33; border: 1px solid #e74c3c; }
+.messages li.success { background: #2ecc7133; border: 1px solid #2ecc71; }
+.messages li.fade-out { opacity: 0; transform: translateY(-4px); }
+
+.filter-form { display: flex; align-items: center; gap: 8px; }
+
+.back-link { display: inline-block; margin-bottom: 12px; color: inherit; text-decoration: none; font-weight: 600; }
+.back-link:hover { text-decoration: underline; }
+.back-link:active { transform: translateY(1px); }
+
+form.inline { display: inline; }
+.actions { margin: 16px 0; }
+.actions form, .actions a.button { display: inline-block; margin-right: 8px; margin-bottom: 8px; }
+
+button, .button {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #8884;
+  background: #8881;
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
+  display: inline-block;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+button:hover, .button:hover { background: #8883; border-color: #8888; }
+button:active, .button:active { background: #8886; transform: translateY(1px); }
+
+button.primary { background: #2ecc71; border-color: #2ecc71; }
+button.primary:hover { background: #29b765; border-color: #29b765; }
+button.primary:active { background: #24a058; border-color: #24a058; }
+
+button.danger { background: #e74c3c; border-color: #e74c3c; color: #fff; }
+button.danger:hover { background: #d8432f; border-color: #d8432f; }
+button.danger:active { background: #c23b28; border-color: #c23b28; }
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #8884;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.icon-button:hover { background: #8883; border-color: #8888; }
+.icon-button:active { background: #8886; transform: translateY(1px); }
+
+.status-select {
+  border-radius: 6px;
+  border: 1px solid #8884;
+  padding: 6px 10px;
+  font: inherit;
+  background: transparent;
+  color: inherit;
+}
+.status-select option {
+  color: #000;
+  background: #fff;
+}
+
+.id-search-input {
+  border-radius: 5px;
+  border: 1px solid #8884;
+  padding: 10px 10px;
+  height: 38px;
+  font: inherit;
+  background: transparent;
+  color: inherit;
+  box-sizing: border-box;
+  width: 120px;
+}
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-weight: 600; margin-bottom: 4px; }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  max-width: 420px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  border: 1px solid #8884;
+  border-radius: 6px;
+  font: inherit;
+  background: transparent;
+  color: inherit;
+}
+.field textarea { min-height: 60px; max-height: 160px; resize: vertical; }
+.field .errorlist { color: #e74c3c; padding: 0; margin: 4px 0 0; list-style: none; font-size: 0.9em; }
+
+.actions .reason-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+}
+.reason-field { margin-bottom: 0; }
+.reason-field textarea {
+  max-width: 640px;
+  min-width: 320px;
+  overflow: hidden; 
+  resize: none;
+  min-height: 40px;
+  max-height: 40px;
+}
+
+.timeline { list-style: none; padding: 0; border-left: 2px solid #8884; margin-top: 8px; }
+.timeline li { padding: 6px 0 6px 16px; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -5px; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: #8884; }
+.timeline li.dot-pending::before { background: #f5a623; }
+.timeline li.dot-approved::before { background: #2ecc71; }
+.timeline li.dot-rejected::before { background: #e74c3c; }
+.timeline li.dot-blocked::before { background: #8e44ad; }
+.timestamp { color: #888; font-size: 0.85em; }

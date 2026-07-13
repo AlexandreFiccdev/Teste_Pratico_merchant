@@ -1,0 +1,29 @@
+{% load static merchant_extras %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Merchants{% endblock %}</title>
+<link rel="stylesheet" href="{% static_v 'merchants_ui/css/base.css' %}">
+<link rel="stylesheet" href="{% static_v 'merchants_ui/css/components.css' %}">
+</head>
+<body>
+<header>
+  <h1><a href="{% url 'merchant_list' %}">Merchants</a></h1>
+  <nav>
+    <a class="button" href="{% url 'merchant_create' %}">+ Novo Merchants</a>
+  </nav>
+</header>
+
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li class="{{ message.tags }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<script src="{% static_v 'merchants_ui/js/app.js' %}"></script>
+</body>
+</html>
