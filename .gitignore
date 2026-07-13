@@ -10,7 +10,6 @@ db.sqlite3
 
 .env
 .env.*
-DECISOES_TECNICAS.MD
 DECISOES_TECNICAS.docx
 .DS_Store
 Thumbs.db
