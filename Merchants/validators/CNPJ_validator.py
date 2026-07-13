@@ -18,8 +18,17 @@ def _cnpj_check_digit(base, weights):
     return 0 if remainder < 2 else 11 - remainder
 
 
+def normalize_cnpj(value):
+    """Strip mask characters (dots, slash, dash, spaces...) and uppercase.
+
+    Lets the user type a CNPJ with or without mask while guaranteeing a
+    single canonical representation is ever persisted.
+    """
+    return re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
+
+
 def validate_cnpj(value):
-    cnpj = re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
+    cnpj = normalize_cnpj(value)
 
     if len(cnpj) != 14 or not re.fullmatch(r"[A-Z0-9]{12}[0-9]{2}", cnpj):
         raise ValidationError(

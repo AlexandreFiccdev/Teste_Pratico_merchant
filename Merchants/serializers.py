@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from .models import Merchant, MerchantEvent
-from .validators.CNPJ_validator import validate_cnpj
+from .validators.CNPJ_validator import normalize_cnpj, validate_cnpj
 
 
 class MerchantEventSerializer(serializers.ModelSerializer):
@@ -12,8 +12,20 @@ class MerchantEventSerializer(serializers.ModelSerializer):
         read_only_fields = fields
 
 
+class CNPJField(serializers.CharField):
+    """Accepts a CNPJ with or without mask, normalizing it (digits/letters
+    only, uppercased) before validators or uniqueness checks run, so a
+    masked and unmasked version of the same CNPJ are always recognized as
+    the same value."""
+
+    def to_internal_value(self, data):
+        value = super().to_internal_value(data)
+        return normalize_cnpj(value)
+
+
 class MerchantFieldsMixin(serializers.Serializer):
-    cnpj = serializers.CharField(
+    cnpj = CNPJField(
+        max_length=14,
         validators=[
             validate_cnpj,
             UniqueValidator(

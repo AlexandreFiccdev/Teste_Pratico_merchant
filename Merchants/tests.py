@@ -93,6 +93,27 @@ class MerchantCreateTests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_cnpj_with_mask_is_stored_without_mask(self):
+        response = self.client.post(
+            reverse("merchant-list"),
+            merchant_payload(cnpj="11.222.333/0001-81"),
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["cnpj"], "11222333000181")
+        merchant = Merchant.objects.get()
+        self.assertEqual(merchant.cnpj, "11222333000181")
+
+    def test_cnpj_masked_and_unmasked_are_treated_as_duplicate(self):
+        self.client.post(
+            reverse("merchant-list"), merchant_payload(cnpj="11222333000181")
+        )
+        response = self.client.post(
+            reverse("merchant-list"),
+            merchant_payload(cnpj="11.222.333/0001-81"),
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("cnpj", response.data)
+
     def test_client_cannot_set_initial_status(self):
         response = self.client.post(
             reverse("merchant-list"),

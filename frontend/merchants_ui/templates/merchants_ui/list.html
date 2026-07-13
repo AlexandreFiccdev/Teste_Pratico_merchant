@@ -34,7 +34,7 @@
     <tr>
       <td>{{ merchant.id }}</td>
       <td>{{ merchant.razao_social }}</td>
-      <td>{{ merchant.cnpj }}</td>
+      <td>{{ merchant.cnpj|mask_cnpj }}</td>
       <td><span class="badge badge-{{ merchant.status }}">{{ merchant.status }}</span></td>
       <td>{{ merchant.created_at|br_datetime }}</td>
       <td>

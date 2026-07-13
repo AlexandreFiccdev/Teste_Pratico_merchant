@@ -6,7 +6,11 @@ from django.templatetags.static import static
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 
+from .. import services
+
 register = template.Library()
+
+register.filter("mask_cnpj", services.format_cnpj)
 
 
 @register.simple_tag

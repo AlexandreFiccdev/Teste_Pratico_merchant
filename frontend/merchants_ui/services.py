@@ -1,4 +1,6 @@
 """Thin HTTP client around the Merchants API used by the views."""
+import re
+
 import requests
 from django.conf import settings
 
@@ -59,6 +61,15 @@ def reject(merchant_id, reason):
 
 def block(merchant_id, reason):
     return _request("POST", f"/merchants/{merchant_id}/block/", json={"reason": reason})
+
+
+def format_cnpj(value):
+    """Add the XX.XXX.XXX/XXXX-XX mask for display. The API always stores
+    and returns the CNPJ without a mask; this is display-only formatting."""
+    digits = re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
+    if len(digits) != 14:
+        return value
+    return f"{digits[0:2]}.{digits[2:5]}.{digits[5:8]}/{digits[8:12]}-{digits[12:14]}"
 
 
 def format_errors(data):

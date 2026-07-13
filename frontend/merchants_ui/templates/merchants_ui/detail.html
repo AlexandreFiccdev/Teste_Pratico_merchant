@@ -8,7 +8,7 @@
 <h2>{{ merchant.razao_social }} <span class="badge badge-{{ merchant.status }}">{{ merchant.status }}</span></h2>
 
 <table>
-  <tr><th>CNPJ</th><td>{{ merchant.cnpj }}</td></tr>
+  <tr><th>CNPJ</th><td>{{ merchant.cnpj|mask_cnpj }}</td></tr>
   <tr><th>Nome fantasia</th><td>{{ merchant.nome_fantasia|default:"-" }}</td></tr>
   <tr><th>E-mail</th><td>{{ merchant.email }}</td></tr>
   <tr><th>Telefone</th><td>{{ merchant.telefone|default:"-" }}</td></tr>

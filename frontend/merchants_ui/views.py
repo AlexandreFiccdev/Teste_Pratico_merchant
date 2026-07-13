@@ -152,7 +152,8 @@ def merchant_edit(request, pk):
                 for msg in services.format_errors(data):
                     messages.error(request, msg)
     else:
-        form = MerchantForm(initial=merchant)
+        initial = {**merchant, "cnpj": services.format_cnpj(merchant["cnpj"])}
+        form = MerchantForm(initial=initial)
 
     return render(request, "merchants_ui/form.html", {"form": form, "title": "Editar Merchant"})
 

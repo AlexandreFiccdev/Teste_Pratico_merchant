@@ -1,6 +1,6 @@
 from django.db import models
 
-from .validators.CNPJ_validator import validate_cnpj
+from .validators.CNPJ_validator import normalize_cnpj, validate_cnpj
 
 
 class MerchantStatus(models.TextChoices):
@@ -12,7 +12,7 @@ class MerchantStatus(models.TextChoices):
 
 
 class Merchant(models.Model):
-    cnpj = models.CharField(max_length=18, unique=True, validators=[validate_cnpj])
+    cnpj = models.CharField(max_length=14, unique=True, validators=[validate_cnpj])
     razao_social = models.CharField(max_length=255)
     nome_fantasia = models.CharField(max_length=255, blank=True)
     email = models.EmailField()
@@ -23,6 +23,10 @@ class Merchant(models.Model):
         choices=MerchantStatus.choices,
         default=MerchantStatus.DRAFT,
     )
+
+    def save(self, *args, **kwargs):
+        self.cnpj = normalize_cnpj(self.cnpj)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.razao_social} ({self.cnpj})"
