@@ -20,18 +20,24 @@ cd teste_pratico
 
 **Opção 2 — a partir de um arquivo `.zip`:**
 
-1. Extraia o `.zip` recebido em uma pasta de sua preferência.
-2. Abra o terminal dentro da pasta extraída (`teste_pratico/`, a que contém este `README.md`).
+A forma mais simples é extrair pelo Explorador de Arquivos do Windows: clique com o botão
+direito no `.zip` → **Extrair Tudo...** → escolha o destino, e abra o terminal dentro da pasta
+extraída (a que contém este `README.md`).
+
+Se preferir via terminal:
 
 ```bash
-# Windows (PowerShell)
-Expand-Archive teste_pratico.zip -DestinationPath .
-cd teste_pratico
+# Windows — no PowerShell
+Expand-Archive Teste_Pratico_merchant-main.zip -DestinationPath .
+cd Teste_Pratico_merchant-main
 
 # Linux/Mac
-unzip teste_pratico.zip
-cd teste_pratico
+unzip Teste_Pratico_merchant-main.zip
+cd Teste_Pratico_merchant-main
 ```
+
+Os comandos das seções seguintes usam `teste_pratico/` como referência à raiz do projeto — se a
+sua pasta tiver outro nome (como no exemplo acima), rode os comandos a partir dela mesma.
 
 ## Como rodar o programa (Recomendado)
 
