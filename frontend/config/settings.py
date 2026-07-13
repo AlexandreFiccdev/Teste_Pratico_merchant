@@ -48,9 +48,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# This project has no database of its own: it only renders pages backed by
-# the Merchants API. SQLite here is just to satisfy Django's session/admin
-# apps that expect a DB to exist.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -68,7 +65,4 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Base URL of the Merchants API this frontend talks to.
-# Inside docker-compose it resolves to the "api" service name;
-# outside docker (running manage.py locally) it defaults to localhost.
 API_BASE_URL = os.environ.get('API_BASE_URL', 'http://localhost:8000/api')

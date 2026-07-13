@@ -25,7 +25,6 @@ def _api_unavailable(request):
 
 
 def _apply_api_errors_to_form(form, data):
-    """Map a DRF error payload onto form field errors. Returns True if applied."""
     if isinstance(data, dict) and "detail" not in data:
         for field, errors in data.items():
             errors = errors if isinstance(errors, list) else [errors]

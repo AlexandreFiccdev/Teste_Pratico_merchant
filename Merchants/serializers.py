@@ -13,11 +13,6 @@ class MerchantEventSerializer(serializers.ModelSerializer):
 
 
 class CNPJField(serializers.CharField):
-    """Accepts a CNPJ with or without mask, normalizing it (digits/letters
-    only, uppercased) before validators or uniqueness checks run, so a
-    masked and unmasked version of the same CNPJ are always recognized as
-    the same value."""
-
     def to_internal_value(self, data):
         value = super().to_internal_value(data)
         return normalize_cnpj(value)

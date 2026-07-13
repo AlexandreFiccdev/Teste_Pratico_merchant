@@ -15,8 +15,6 @@ register.filter("mask_cnpj", services.format_cnpj)
 
 @register.simple_tag
 def static_v(path):
-    """Like {% static %}, but appends the file's mtime as a cache-busting
-    query string so browsers always fetch the latest CSS/JS after a deploy."""
     url = static(path)
     found = finders.find(path)
     if found:

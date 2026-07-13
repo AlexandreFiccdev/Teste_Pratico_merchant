@@ -7,8 +7,6 @@ CNPJ_SECOND_WEIGHTS = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
 
 
 def _cnpj_char_value(char):
-    # Regra da Receita Federal para o CNPJ alfanumérico: o valor de cada
-    # caractere (dígito ou letra maiúscula) é o seu código ASCII menos 48.
     return ord(char) - 48
 
 
@@ -19,11 +17,6 @@ def _cnpj_check_digit(base, weights):
 
 
 def normalize_cnpj(value):
-    """Strip mask characters (dots, slash, dash, spaces...) and uppercase.
-
-    Lets the user type a CNPJ with or without mask while guaranteeing a
-    single canonical representation is ever persisted.
-    """
     return re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
 
 

@@ -1,4 +1,3 @@
-"""Thin HTTP client around the Merchants API used by the views."""
 import re
 
 import requests
@@ -8,7 +7,7 @@ TIMEOUT = 5
 
 
 class ApiUnavailableError(Exception):
-    """Raised when the API can't be reached at all (network/connection error)."""
+    pass
 
 
 def _url(path):
@@ -64,8 +63,6 @@ def block(merchant_id, reason):
 
 
 def format_cnpj(value):
-    """Add the XX.XXX.XXX/XXXX-XX mask for display. The API always stores
-    and returns the CNPJ without a mask; this is display-only formatting."""
     digits = re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
     if len(digits) != 14:
         return value
@@ -73,7 +70,6 @@ def format_cnpj(value):
 
 
 def format_errors(data):
-    """Flatten a DRF error payload (dict of field -> [messages], or {'detail': ...}) into strings."""
     if isinstance(data, dict):
         if "detail" in data:
             return [str(data["detail"])]

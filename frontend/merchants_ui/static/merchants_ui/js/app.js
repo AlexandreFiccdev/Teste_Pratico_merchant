@@ -2,8 +2,6 @@
   "use strict";
 
   function formatCNPJ(raw) {
-    // CNPJ alfanumérico: os 12 primeiros caracteres podem ser dígitos ou
-    // letras (maiúsculas), os 2 dígitos verificadores finais são sempre numéricos.
     var chars = (raw || "").replace(/[^0-9A-Za-z]/g, "").toUpperCase().slice(0, 14);
     var head = chars.slice(0, 12);
     var tail = chars.slice(12).replace(/\D/g, "");
