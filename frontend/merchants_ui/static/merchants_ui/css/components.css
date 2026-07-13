@@ -84,7 +84,7 @@ button.danger:active { background: #c23b28; border-color: #c23b28; }
 }
 
 .id-search-input {
-  border-radius: 5px;
+  border-radius: 6px;
   border: 1px solid #d0d0d0;
   padding: 10px 10px;
   height: 38px;

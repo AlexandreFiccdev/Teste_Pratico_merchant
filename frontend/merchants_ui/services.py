@@ -5,7 +5,6 @@ from django.conf import settings
 
 TIMEOUT = 5
 
-
 class ApiUnavailableError(Exception):
     pass
 
